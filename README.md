@@ -35,6 +35,6 @@ Et enfin le fichier /lib/src/weatherView.dart contient tout ce qui est lié à l
 
 Package [open_meteo.dart](https://pub.dev/packages/open_meteo) : Utilisé pour effectuer les appels API vers l'API Open Meteo (simplifie grandement le processus avec des fonctions évitant d'avoir à construire soi-même l'URL de la requête)
 
-Package [date_field.dart](https://pub.dev/packages/date_field) : Utilisé pour avoir un picker de date prévu pour s'intégrer dans des form (le widget DateTimeFormField)
+Package [date_field.dart](https://pub.dev/packages/date_field) : Utilisé pour avoir un picker de date prévu pour s'intégrer dans des formulaires (le widget DateTimeFormField)
 
 Package [intl.dart, intl_standalone.dart et date_symbol_data_local.dart](https://pub.dev/packages/intl) : Utilisés pour traiter des formats de date dans le formulaire et initialiser les locales nécessaires pour le bon fonctionnement de date_field
