@@ -60,7 +60,7 @@ class WeatherView extends StatelessWidget {
 }
 
 List<TableRow> buildTemperature (Map temp, Map apparentTemp){ //fonction qui construit le tableau des températures, ligne par ligne. Je décrie en détail le procédé sur cette fonction, mais toutes les fontions builds ont globalement le même fonctionnement
-  List<TableRow> list = []; //On initialise la liste de ligne de tableau qu'on va renvoyer, elle sera remplie tout au long de la fonction
+  List<TableRow> list = []; //On initialise la liste de lignes de tableau qu'on va renvoyer, elle sera remplie tout au long de la fonction
   String strDate = ''; //On initialise une chaine pour stocker et formatter la date
   String strTemp = ''; //On initialise une chaine pour stocker et formatter la température
   String strApparentTemp = ''; //On initialise une chaine pour stocker et formatter la température ressentie
