@@ -30,64 +30,64 @@ class MyCustomFormState extends State<MyCustomForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextFormField(
+              TextFormField( //Champs de texte pour la latitude
                 decoration: const InputDecoration(
                   hintText: 'exemple : 52.52',
                   labelText: 'Latitude',
                 ),
                 controller: latitudeController,
                 validator: (value) {
-                  if (value == null || value.isEmpty || double.tryParse(value) == null || double.tryParse(value)! > 90.0 || double.tryParse(value)! < -90.0) {
+                  if (value == null || value.isEmpty || double.tryParse(value) == null || double.tryParse(value)! > 90.0 || double.tryParse(value)! < -90.0) { //On vérifie que l'entrée est une latitude valide
                     return 'Veuillez entrer une latitude';
                   }
                 return null;
                 }
               ),
-              TextFormField(
+              TextFormField( //Champs de texte pour la longitude
                 decoration: const InputDecoration(
                   hintText: 'exemple : 13.41',
                   labelText: 'Longitude',
                 ),
                 controller: longitudeController,
                 validator: (value) {
-                  if (value == null || value.isEmpty || double.tryParse(value) == null || double.tryParse(value)! > 180.0 || double.tryParse(value)! < -180.0) {
+                  if (value == null || value.isEmpty || double.tryParse(value) == null || double.tryParse(value)! > 180.0 || double.tryParse(value)! < -180.0) { //On vérifie que l'entrée est une longitude valide
                     return 'Veuillez entrer une longitude';
                   }
                   return null;
                 }
               ),
-              DateTimeFormField(
+              DateTimeFormField( //Champs de date pour la date de début
                 decoration: const InputDecoration(
                   labelText: 'Date de début',
                 ),
-                dateFormat: DateFormat.yMMMMd('fr_FR'),
+                dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français
                 firstDate: DateTime(1940, 1, 1),
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),
                 onChanged: (DateTime? value) {
                   startDate = value;
                 },
-                mode: DateTimeFieldPickerMode.date,
+                mode: DateTimeFieldPickerMode.date, //On ne choisit que la date, l'API ne reconnaissant pas l'heure
               ),
-              DateTimeFormField(
+              DateTimeFormField( //Champs de date pour la date de fin
                 decoration: const InputDecoration(
                   labelText: 'Date de fin',
                 ),
-                dateFormat: DateFormat.yMMMMd('fr_FR'),
+                dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français
                 firstDate: DateTime(1940,1,1),
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),
                 onChanged: (DateTime? value) {
                   endDate = value;
                 },
-                mode: DateTimeFieldPickerMode.date,
+                mode: DateTimeFieldPickerMode.date, //On ne choisit que la date, l'API ne reconnaissant pas l'heure
               ),
               ElevatedButton(
-                onPressed: () async {
-                  if (startDate == null || endDate == null || startDate!.isAfter(endDate!)) {
+                onPressed: () async { //La fonction est async puisque c'est à l'appui du bouton de validation que sera éventuellement appelé l'API Open Meteo
+                  if (startDate == null || endDate == null || startDate!.isAfter(endDate!)) { //On vérifie que deux date sont choisies, et que la date de fin est ultérieure à la date de début
                     showDialog(
                       context: context,
-                      builder : (context) => AlertDialog(
+                      builder : (context) => AlertDialog( //Si les dates ne sont pas valides, on fait pop une fenêtre de dialogue qui l'indique
                         title: const Text('Erreur de date'),
                         content : const Text('Veuillez sélectionner une date de début et de fin, avec une date de fin ultérieure à la date de début'),
                         actions: [
@@ -99,14 +99,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                       )
                     );
                   }else{
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey.currentState!.validate()) { //On effectue les validations de la latitude et de la longitude
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Traitement des données...')),
+                        const SnackBar(content: Text('Traitement des données...')), //Si tous les champs sont valides, on affiche une snackbar pour signifier à l'utilisateur que les données sont en traitement, car l'appel de l'API peut prendre un certain temps pour de longues périodes
                       );
-                      var apiAnswer = await getResponse(WeatherRequest(double.parse(latitudeController.text), double.parse(longitudeController.text), startDate!, endDate!));
+                      var apiAnswer = await getResponse(WeatherRequest(double.parse(latitudeController.text), double.parse(longitudeController.text), startDate!, endDate!)); //On effectue l'appel API pour récupérer les données demandées par l'utilisateur. On le fait ici pour pouvoir faire de la route WeatherView un StatelessWidget. On stock ensuite la réponse dans la variable apiAnswer.
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => WeatherView(response : apiAnswer))
+                          MaterialPageRoute(builder: (context) => WeatherView(response : apiAnswer)) //Si toute les conditions sont remplies, on passe sur la route WeatherView (de ./weatherView.dart) qui affichera les données en partant de la réponse de l'API stockée dans apiAnswer
                       );
                     }
                   }
