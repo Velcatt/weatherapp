@@ -6,12 +6,12 @@ import 'package:intl/date_symbol_data_local.dart';
 void main() async{
   initializeDateFormatting();
   WidgetsFlutterBinding.ensureInitialized();
-  await findSystemLocale();
+  await findSystemLocale(); //Ces trois dernières commandes sont nécessaire au bon fonctionnement du picker de date qui se trouve dans le formulaire. Nous avons ici besoin de récupérer les locales du système éxecutant l'appli.
   runApp(MaterialApp(
     home: Scaffold(
         appBar: AppBar(
           title: Text(
-              'WeatherApp',
+              'WeatherApp', //Titre de l'appli qui s'affiche au dessus du formulaire
               style: TextStyle(
                 color: Colors.white,
               )
@@ -20,7 +20,7 @@ void main() async{
           backgroundColor: Colors.deepPurple,
         ),
         body: Center(
-              child : MyCustomForm()
+              child : MyCustomForm() //Le formulaire est ici placé sur la page, au centre
             ),
         )
     )

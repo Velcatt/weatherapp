@@ -61,7 +61,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   labelText: 'Date de début',
                 ),
                 dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français
-                firstDate: DateTime(1940, 1, 1),
+                firstDate: DateTime(1940, 1, 1), //0n commence en 1940 puisque c'est la date la plus tôt de l'API
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),
                 onChanged: (DateTime? value) {
@@ -74,7 +74,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   labelText: 'Date de fin',
                 ),
                 dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français
-                firstDate: DateTime(1940,1,1),
+                firstDate: DateTime(1940,1,1), //0n commence en 1940 puisque c'est la date la plus tôt de l'API
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),
                 onChanged: (DateTime? value) {

@@ -20,7 +20,7 @@ Vent
 Précipitations  
 Couverture nuageuse  
 
-Chacun de ces onglets contient un tableau des valeurs correspondantes par heure.
+Chacun de ces onglets contient un tableau des valeurs correspondantes par heure. Si le tableau est trop grand vous pourrez scroller pour accéder aux dernières valeures.
 
 Si vous souhaitez revenir au formulaire, il suffit d'appuyer sur la flèche retour au dessus des onglets.
 

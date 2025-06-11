@@ -21,7 +21,7 @@ Future<ApiResponse> getResponse(WeatherRequest request) async { //Fonction qui e
     longitude: request.longitude,
     startDate: request.startDate,
     endDate: request.endDate,
-    hourly: {
+    hourly: { //On choisit ici quelles sont les variables à récupérer
       HistoricalHourly.temperature_2m,
       HistoricalHourly.apparent_temperature,
       HistoricalHourly.relative_humidity_2m,

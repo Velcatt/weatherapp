@@ -3,7 +3,7 @@ import 'package:open_meteo/open_meteo.dart';
 
 class WeatherView extends StatelessWidget {
   final ApiResponse response;
-  const WeatherView ({super.key, required this.response});
+  const WeatherView ({super.key, required this.response}); //On récupère bien la réponse de l'API pour pouvoir construire les vues correspondantes
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -100,14 +100,14 @@ List<TableRow> buildTemperature (Map temp, Map apparentTemp){ //fonction qui con
       decoration: BoxDecoration(color: Colors.deepPurple), //On met un fond mauve pour l'en tête afin de la détacher visuellement du reste
     )
   );
-  temp.forEach((key, value) { // Pour chaque date et heure, on construit une ligne dans le tableau des températures
+  temp.forEach((key, value) { // Pour chaque date et heure, on construit une ligne dans le tableau des températures. Vu que les tableaux contiennent le même nombre de lignes, on itère sur une seul des maps.
     strDate = key.toString(); // On récupère la date en string dans la variable strDate
     strDate = strDate.substring(0, strDate.length-7); //On enlève tout ce qui est plus petit que la seconde, pour des raisons de lisibilité et de pertinence (l'API n'est précise qu'à l'heure de toute façons)
     strTemp = value.toString(); //On récupère la température en string dans la variable strTemp
     for (var i = strTemp.length; i > 6; i--){ //Pour la température on ne garde que 5 chiffres (6 caractères avec le point) pour plus de lisibilité
       strTemp = strTemp.substring(0, strTemp.length-1); //On retire le dernier caractère jusqu'à ce qu'il n'en reste que 6
     }
-    strApparentTemp = apparentTemp[key].toString(); //On récupère la température ressentie dans la variable strApparentTemp
+    strApparentTemp = apparentTemp[key].toString(); //On récupère la température ressentie depuis l'autre map, en string, dans la variable strApparentTemp
     for (var i =strApparentTemp.length; i > 6; i--){ //Idem pour la température ressentie, on ne garde que 5 chiffres (6 caractères avec le point) pour plus de lisibilité
       strApparentTemp = strApparentTemp.substring(0, strApparentTemp.length-1); //On retire le dernier caractère jusqu'à ce qu'il n'en reste que 6
     }
