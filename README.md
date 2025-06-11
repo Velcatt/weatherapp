@@ -14,11 +14,11 @@ Lorsque l'appli est lancée, vous arriverez directement sur le formulaire à rem
 
 Une fois ceci fait il ne reste plus qu'à appuyer sur le bouton de validation. Vous serez alors redirigé vers une vue des informations météo, classées dans 5 onglet chacun représentée par une icone:
 
-Température
-Humidité
-Vent
-Précipitations
-Couverture nuageuse
+Température  
+Humidité  
+Vent  
+Précipitations  
+Couverture nuageuse  
 
 Chacun de ces onglets contient un tableau des valeurs correspondantes par heure.
 
@@ -26,10 +26,10 @@ Si vous souhaitez revenir au formulaire, il suffit d'appuyer sur la flèche reto
 
 ## Organisation du projet
 
-Le point d'entrée /lib/main.dart ne contient qu'une appBar et une instance du formulaire.
-Le fichier /lib/src/form.dart contient le formulaire et son état.
-Le fichier /lib/src/weather.dart contient tout ce qui est lié à l'appel de l'API Open Meteo
-Et enfin le fichier /lib/src/weatherView.dart contient tout ce qui est lié à l'affichage des données. 
+Le point d'entrée /lib/main.dart ne contient qu'une appBar et une instance du formulaire.  
+Le fichier /lib/src/form.dart contient le formulaire et son état.  
+Le fichier /lib/src/weather.dart contient tout ce qui est lié à l'appel de l'API Open Meteo  
+Et enfin le fichier /lib/src/weatherView.dart contient tout ce qui est lié à l'affichage des données.  
 
 ## Dépendances
 
