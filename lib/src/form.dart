@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:date_field/date_field.dart';
-import 'package:open_meteo/open_meteo.dart';
 import 'weatherView.dart';
 import 'weather.dart';
 import 'package:intl/intl.dart';
