@@ -11,7 +11,7 @@ void main() async{
     home: Scaffold(
         appBar: AppBar(
           title: Text(
-              'weatherapp',
+              'WeatherApp',
               style: TextStyle(
                 color: Colors.white,
               )
