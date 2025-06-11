@@ -6,7 +6,7 @@ Il s'agit d'une application mobile/PC (même si l'interface est plus orientée m
 
 L'application peut être exécutée en debug sur un IDE (j'utilise Android Studio personnellement), avec le point d'entrée /lib/main.dart
 
-Elle peut également être compilée avec la command "flutter build" pour obtenir une apk utilisable sur un android ou une émulateur android.
+Elle peut également être compilée avec la command "flutter build apk" pour obtenir une apk utilisable sur un android ou une émulateur android. Pensez à attendre la fin d'éxecution de la commande pour avoir l'emplacement de l'apk produite dans le dossier "build".
 
 ## Utilisation de l'appli
 

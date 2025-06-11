@@ -28,7 +28,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         child : SizedBox(
           width: 300,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center, //On centre le formulaire verticalement pour une meilleure accessibilité des champs
             children: <Widget>[
               TextFormField( //Champs de texte pour la latitude
                 decoration: const InputDecoration(
