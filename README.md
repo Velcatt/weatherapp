@@ -12,7 +12,7 @@ Elle peut également être compilée avec la command "flutter build apk" pour ob
 
 Lorsque l'application est lancée, vous arriverez directement sur le formulaire à remplir pour choisir les coordonnées et la période de temps désirée.
 
-Une fois ceci fait il ne reste plus qu'à appuyer sur le bouton de validation. Vous serez alors redirigé vers une vue des informations météo, classées dans 5 onglet chacun représentée par des icônes:
+Une fois ceci fait il ne reste plus qu'à appuyer sur le bouton de validation. Vous serez alors redirigé vers une vue des informations météo, classées dans 5 onglet chacun représentée par des icônes :
 
 Température  
 Humidité  
@@ -28,7 +28,7 @@ Si vous souhaitez revenir au formulaire, il suffit d'appuyer sur la flèche reto
 
 Le point d'entrée /lib/main.dart ne contient qu'une appBar et une instance du formulaire.  
 Le fichier /lib/src/form.dart contient le formulaire et son état.  
-Le fichier /lib/src/weather.dart contient tout ce qui est lié à l'appel de l'API Open Meteo  
+Le fichier /lib/src/weather.dart contient tout ce qui est lié à l'appel de l'API Open Meteo.  
 Et enfin le fichier /lib/src/weatherView.dart contient tout ce qui est lié à l'affichage des données récupérées depuis l'API.  
 
 ## Dépendances
