@@ -9,7 +9,6 @@ void main() async{
   initializeDateFormatting();
   WidgetsFlutterBinding.ensureInitialized();
   await findSystemLocale();
-  initializeDateFormatting();
   var request = WeatherRequest(52.52, 13.41, DateTime.utc(2015, 5, 18), DateTime.utc(2015, 5, 21));
   var response = await getResponse(request);
   var data = response.hourlyData[HistoricalHourly.temperature_2m]!;
@@ -26,15 +25,11 @@ void main() async{
           centerTitle: true,
           backgroundColor: Colors.deepPurple,
         ),
-        body: Column(
-          children: [
-            Center(
-            child : MyCustomForm()
+        body: Center(
+              child : MyCustomForm()
             ),
-          ]
         )
     )
-  )
   );
 }
 

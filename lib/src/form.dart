@@ -3,6 +3,7 @@ import 'package:date_field/date_field.dart';
 import 'package:open_meteo/open_meteo.dart';
 import 'weatherView.dart';
 import 'weather.dart';
+import 'package:intl/intl.dart';
 
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
@@ -28,6 +29,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         child : SizedBox(
           width: 300,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextFormField(
                 decoration: const InputDecoration(
@@ -59,6 +61,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: const InputDecoration(
                   labelText: 'Date de début',
                 ),
+                dateFormat: DateFormat.yMMMMd('fr_FR'),
                 firstDate: DateTime(1940, 1, 1),
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),
@@ -71,6 +74,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: const InputDecoration(
                   labelText: 'Date de fin',
                 ),
+                dateFormat: DateFormat.yMMMMd('fr_FR'),
                 firstDate: DateTime(1940,1,1),
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),

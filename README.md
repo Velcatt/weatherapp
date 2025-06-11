@@ -1,6 +1,6 @@
 # weatherapp
 
-A new Flutter project.
+Il s'agit d'une application mobile/PC (même si l'interface est plus orientée mobile) qui récupère des données de l'API Open-Meteo et les affiches.
 
 ## Getting Started
 
