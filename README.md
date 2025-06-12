@@ -20,7 +20,7 @@ Vent
 Précipitations  
 Couverture nuageuse  
 
-Chacun de ces onglets contient un tableau des valeurs correspondantes par heure. Si le tableau est trop grand vous pourrez scroller pour accéder aux dernières valeures.
+Chacun de ces onglets contient un graphique de l'évolution des données en fonction du temps, et un tableau des valeurs correspondantes par heure. Vous pouvez défiler pour accéder à toutes les valeurs du tableau.
 
 Si vous souhaitez revenir au formulaire, il suffit d'appuyer sur la flèche retour au dessus des onglets.
 
@@ -38,3 +38,5 @@ Package [open_meteo.dart](https://pub.dev/packages/open_meteo) : Utilisé pour e
 Package [date_field.dart](https://pub.dev/packages/date_field) : Utilisé pour avoir un picker de date prévu pour s'intégrer dans des formulaires (le widget DateTimeFormField)
 
 Package [intl.dart, intl_standalone.dart et date_symbol_data_local.dart](https://pub.dev/packages/intl) : Utilisés pour traiter des formats de date dans le formulaire et initialiser les locales nécessaires pour le bon fonctionnement de date_field
+
+Package [fl_chart.dart](https://pub.dev/packages/fl_chart) : Utilisé pour construire et afficher les graphiques

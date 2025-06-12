@@ -9,15 +9,14 @@ class WeatherView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<FlSpot> tempList = []; //On initialise une liste de points correspondant aux températures pour le graph
     List<FlSpot> apparentTempList = []; //On initialise une liste de points correspondant aux températures apparentes pour le graph
-    List<FlSpot> humidityList = [];
-    List<FlSpot> windSpeedList = [];
-    List<FlSpot> windGustList = [];
-    List<FlSpot> precipitationList = [];
-    List<FlSpot> rainList = [];
-    List<FlSpot> snowList = [];
-    List<FlSpot> cloudCoverList = [];
+    List<FlSpot> humidityList = []; //On initialise une liste de points correspondant à l'humidité pour le graph
+    List<FlSpot> windSpeedList = []; //On initialise une liste de points correspondant à la viteses du vent pour le graph
+    List<FlSpot> windGustList = []; //On initialise une liste de points correspondant aux rafales de vents pour le graph
+    List<FlSpot> rainList = []; //On initialise une liste de points correspondant à la pluie pour le graph
+    List<FlSpot> snowList = []; //On initialise une liste de points correspondant à la chute de neige pour le graph
+    List<FlSpot> cloudCoverList = []; //On initialise une liste de points correspondant à la couverture nuageuse pour le graph
     response.hourlyData[HistoricalHourly.temperature_2m]!.values.forEach((key, value) {
-      tempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Pour chaque température, on ajoute un point de graph dans la liste, contenant la date/heure et la température en double
+      tempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Pour chaque température, on ajoute un point de graph dans la liste, contenant la date/heure convertit en millisecond depuis l'epoch, et la température
     });
     response.hourlyData[HistoricalHourly.apparent_temperature]!.values.forEach((key, value) {
       apparentTempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
@@ -30,9 +29,6 @@ class WeatherView extends StatelessWidget {
     });
     response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values.forEach((key, value) {
       windGustList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
-    });
-    response.hourlyData[HistoricalHourly.precipitation]!.values.forEach((key, value) {
-      precipitationList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
     });
     response.hourlyData[HistoricalHourly.rain]!.values.forEach((key, value) {
       rainList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
@@ -69,14 +65,14 @@ class WeatherView extends StatelessWidget {
                         Text(
                           "Temp°C",
                           style: TextStyle(
-                            color: Colors.deepPurple,
+                            color: Colors.deepPurple, //Les couleurs choisies ici correspondent aux couleurs des lignes du graph
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
                           "Temp°C Ressentie",
                           style: TextStyle(
-                            color: Colors.deepPurple[200],
+                            color: Colors.deepPurple[200], //Les couleurs choisies ici correspondent aux couleurs des lignes du graph
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -85,22 +81,22 @@ class WeatherView extends StatelessWidget {
                     SizedBox(
                       width: 400,
                       height: 400,
-                      child: LineChart(
-                        LineChartData(
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                minIncluded: false,
+                      child: LineChart( //On construit le graphique. Je commenterais ce premier graph en détail mais ils fonctionnent tous de façon similaire
+                        LineChartData( //Pour stocker toutes les données liées au graph
+                          titlesData: FlTitlesData( //Pour paramétrer les titres, cad les valeurs affichées sur chaque axe
+                            bottomTitles: AxisTitles( //Titres de l'axe du bas
+                              sideTitles: SideTitles( //Les titres des dates
+                                minIncluded: false, //On exclut le minimum et le maximum pour éviter d'avoir des valeurs qui se chevauchent visuellement
                                 maxIncluded: false,
-                                showTitles: true,
+                                showTitles: true, //On affiche bien les titres de l'axe du bas, ce sera notre axe du temps
                                 getTitlesWidget: (value, meta) {
-                                  var date = DateTime.fromMillisecondsSinceEpoch(value.toInt()).toString();
+                                  var date = DateTime.fromMillisecondsSinceEpoch(value.toInt()).toString(); //Comme on a convertit les dates en milisecond depuis l'epoch pour pouvoir construire chaque point du graph, on les reconvertit pour les afficher de manière lisible
                                   date = date.substring(0, date.length-12);
                                   return SideTitleWidget(
                                     meta: meta,
-                                    angle:120,
+                                    angle:120, //On penche l'affichage de la date pour plus de lisibilité
                                     child: Text(
-                                      "         $date",
+                                      "         $date", //On met plusieurs espaces avant la date pour éviter qu'elle chevauche le graph
                                       style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
@@ -110,13 +106,13 @@ class WeatherView extends StatelessWidget {
                                 },
                               ),
                             ),
-                            leftTitles: AxisTitles(
+                            leftTitles: AxisTitles( //Titres de l'axe de gauche
                               sideTitles: SideTitles(
-                                minIncluded: false,
+                                minIncluded: false, // Encore une fois, on retire le max et le min pour éviter des problèmes de superposition
                                 maxIncluded: false,
-                                showTitles: true,
+                                showTitles: true, //On montre bien les titres de l'axe de gauche, ce sera ici notre axe des températures, mais pour chaque graph ce sera l'axe des valeurs concerné (humidité en % pour le graph de l'humidité par exemple)
                                 getTitlesWidget: (value, meta) {
-                                  var temp = value.toInt();
+                                  var temp = value.toInt(); //On passe les température en Int sur les axes pour plus de clarté
                                   return SideTitleWidget(
                                     meta: meta,
                                     child: Text(
@@ -130,28 +126,28 @@ class WeatherView extends StatelessWidget {
                                 }
                               )
                             ),
-                            topTitles: AxisTitles(
+                            topTitles: AxisTitles( //Titres de l'axe du haut
                               sideTitles: SideTitles(
-                                showTitles: false,
+                                showTitles: false, //Pour l'axe du haut on n'affiche pas les titres
                               )
                             ),
-                            rightTitles: AxisTitles(
+                            rightTitles: AxisTitles( //Titres de l'axe de droite
                               sideTitles: SideTitles(
-                                showTitles: false,
+                                showTitles: false, //Idem que pour l'axe du haut, on n'affiche pas les titres
                               )
                             )
                           ),
-                          lineBarsData: [
+                          lineBarsData: [ //Contient chacune des lignes à afficher sur le graph
                             LineChartBarData(
-                              spots: tempList,
-                              color: Colors.deepPurple,
+                              spots: tempList, //On passe la liste de points des température à la première ligne
+                              color: Colors.deepPurple, //Même couleur que la légende correspondante
                               dotData: FlDotData(
                                 show: false,
                               )
                             ),
                             LineChartBarData(
-                                spots: apparentTempList,
-                                color: Colors.deepPurple[200],
+                                spots: apparentTempList, //On passe la liste de points des température apparentes à la deuxième ligne
+                                color: Colors.deepPurple[200], //Même couleur que la légende correspondante
                                 dotData: FlDotData(
                                   show: false,
                                 )
@@ -164,7 +160,7 @@ class WeatherView extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
                         children: buildTemperature(response.hourlyData[HistoricalHourly.temperature_2m]!.values,response.hourlyData[HistoricalHourly.apparent_temperature]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
-                        border: TableBorder.all(),
+                        border: TableBorder.all(), //Pour voir les bordures entre chaque cellule du tableau
                       ),
                     ),
                   ],
@@ -370,7 +366,7 @@ class WeatherView extends StatelessWidget {
                     Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
-                        children: buildWind(response.hourlyData[HistoricalHourly.wind_speed_10m]!.values,response.hourlyData[HistoricalHourly.wind_direction_10m]!.values,response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
+                        children: buildWind(response.hourlyData[HistoricalHourly.wind_speed_10m]!.values,response.hourlyData[HistoricalHourly.wind_direction_10m]!.values,response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values), //On appelle la fonction buildWind qui construit le tableau des vents
                         border: TableBorder.all(),
                       ),
                     ),
@@ -384,23 +380,16 @@ class WeatherView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          "Précipitations",
+                          "Pluie",
                           style: TextStyle(
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "Pluie",
-                          style: TextStyle(
-                            color: Colors.deepPurple[200],
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
                           "Neige",
                           style: TextStyle(
-                            color: Colors.deepPurple[900],
+                            color: Colors.deepPurple[200],
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -447,7 +436,7 @@ class WeatherView extends StatelessWidget {
                                             child: Text(
                                               "$amount mm",
                                               style: TextStyle(
-                                                fontSize: 6,
+                                                fontSize: 8,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -468,22 +457,15 @@ class WeatherView extends StatelessWidget {
                             ),
                             lineBarsData: [
                               LineChartBarData(
-                                  spots: precipitationList,
+                                  spots: rainList,
                                   color: Colors.deepPurple,
                                   dotData: FlDotData(
                                     show: false,
                                   )
                               ),
                               LineChartBarData(
-                                  spots: rainList,
-                                  color: Colors.deepPurple[200],
-                                  dotData: FlDotData(
-                                    show: false,
-                                  )
-                              ),
-                              LineChartBarData(
                                   spots: snowList,
-                                  color: Colors.deepPurple[900],
+                                  color: Colors.deepPurple[200],
                                   dotData: FlDotData(
                                     show: false,
                                   )
@@ -495,7 +477,7 @@ class WeatherView extends StatelessWidget {
                     Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
-                        children: buildPrecipitation(response.hourlyData[HistoricalHourly.precipitation]!.values,response.hourlyData[HistoricalHourly.rain]!.values,response.hourlyData[HistoricalHourly.snowfall]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
+                        children: buildPrecipitation(response.hourlyData[HistoricalHourly.precipitation]!.values,response.hourlyData[HistoricalHourly.rain]!.values,response.hourlyData[HistoricalHourly.snowfall]!.values), //On appelle la fonction buildPrecipitation qui construit le tableau des précipitations
                         border: TableBorder.all(),
                       ),
                     ),
@@ -591,7 +573,7 @@ class WeatherView extends StatelessWidget {
                     Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
-                        children: buildCloudcover(response.hourlyData[HistoricalHourly.cloud_cover]!.values), //On appelle la fonction buildHumidity qui construit le tableau de l'humidité
+                        children: buildCloudcover(response.hourlyData[HistoricalHourly.cloud_cover]!.values), //On appelle la fonction buildCloudcover qui construit le tableau de la couverture nuageuse
                         border: TableBorder.all(),
                       ),
                     ),
