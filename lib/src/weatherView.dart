@@ -1,11 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:open_meteo/open_meteo.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class WeatherView extends StatelessWidget {
   final ApiResponse response;
   const WeatherView ({super.key, required this.response}); //On récupère bien la réponse de l'API pour pouvoir construire les vues correspondantes
   @override
   Widget build(BuildContext context) {
+    List<FlSpot> tempList = []; //On initialise une liste de points correspondant aux températures pour le graph
+    List<FlSpot> apparentTempList = []; //On initialise une liste de points correspondant aux températures apparentes pour le graph
+    List<FlSpot> humidityList = [];
+    List<FlSpot> windSpeedList = [];
+    List<FlSpot> windGustList = [];
+    List<FlSpot> precipitationList = [];
+    List<FlSpot> rainList = [];
+    List<FlSpot> snowList = [];
+    List<FlSpot> cloudCoverList = [];
+    response.hourlyData[HistoricalHourly.temperature_2m]!.values.forEach((key, value) {
+      tempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Pour chaque température, on ajoute un point de graph dans la liste, contenant la date/heure et la température en double
+    });
+    response.hourlyData[HistoricalHourly.apparent_temperature]!.values.forEach((key, value) {
+      apparentTempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+    response.hourlyData[HistoricalHourly.relative_humidity_2m]!.values.forEach((key, value) {
+      humidityList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+    response.hourlyData[HistoricalHourly.wind_speed_10m]!.values.forEach((key, value) {
+      windSpeedList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+    response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values.forEach((key, value) {
+      windGustList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+    response.hourlyData[HistoricalHourly.precipitation]!.values.forEach((key, value) {
+      precipitationList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+    response.hourlyData[HistoricalHourly.rain]!.values.forEach((key, value) {
+      rainList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+    response.hourlyData[HistoricalHourly.snowfall]!.values.forEach((key, value) {
+      snowList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+    response.hourlyData[HistoricalHourly.cloud_cover]!.values.forEach((key, value) {
+      cloudCoverList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+    });
+
     return DefaultTabController(
       length: 5,
       child: Scaffold(
@@ -22,34 +60,542 @@ class WeatherView extends StatelessWidget {
         ),
         body: TabBarView(
             children: [
-              SingleChildScrollView( //Pour rendre le tableau scrollable
-                child: Table(
-                  children: buildTemperature(response.hourlyData[HistoricalHourly.temperature_2m]!.values,response.hourlyData[HistoricalHourly.apparent_temperature]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
-                  border: TableBorder.all(),
+              SingleChildScrollView( //Pour rendre le graph et le tableau scrollable
+                child: Column(
+                  children: [
+                    Row( //On fait un row pour la légende du graph
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Temp°C",
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Temp°C Ressentie",
+                          style: TextStyle(
+                            color: Colors.deepPurple[200],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 400,
+                      height: 400,
+                      child: LineChart(
+                        LineChartData(
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                minIncluded: false,
+                                maxIncluded: false,
+                                showTitles: true,
+                                getTitlesWidget: (value, meta) {
+                                  var date = DateTime.fromMillisecondsSinceEpoch(value.toInt()).toString();
+                                  date = date.substring(0, date.length-12);
+                                  return SideTitleWidget(
+                                    meta: meta,
+                                    angle:120,
+                                    child: Text(
+                                      "         $date",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            leftTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                minIncluded: false,
+                                maxIncluded: false,
+                                showTitles: true,
+                                getTitlesWidget: (value, meta) {
+                                  var temp = value.toInt();
+                                  return SideTitleWidget(
+                                    meta: meta,
+                                    child: Text(
+                                      "$temp°C",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              )
+                            ),
+                            topTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: false,
+                              )
+                            ),
+                            rightTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: false,
+                              )
+                            )
+                          ),
+                          lineBarsData: [
+                            LineChartBarData(
+                              spots: tempList,
+                              color: Colors.deepPurple,
+                              dotData: FlDotData(
+                                show: false,
+                              )
+                            ),
+                            LineChartBarData(
+                                spots: apparentTempList,
+                                color: Colors.deepPurple[200],
+                                dotData: FlDotData(
+                                  show: false,
+                                )
+                            )
+                          ],
+                        )
+                      ),
+                    ),
+                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Table(
+                        children: buildTemperature(response.hourlyData[HistoricalHourly.temperature_2m]!.values,response.hourlyData[HistoricalHourly.apparent_temperature]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
+                        border: TableBorder.all(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SingleChildScrollView( //Pour rendre le tableau scrollable
-                child: Table(
-                  children: buildHumidity(response.hourlyData[HistoricalHourly.relative_humidity_2m]!.values), //On appelle la fonction buildHumidity qui construit le tableau de l'humidité relative
-                  border: TableBorder.all(),
+              SingleChildScrollView( //Pour rendre le graph et le tableau scrollable
+                child: Column(
+                  children: [
+                    Row( //On fait un row pour la légende du graph
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Humidité relative",
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 400,
+                      height: 400,
+                      child: LineChart(
+                          LineChartData(
+                            titlesData: FlTitlesData(
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    minIncluded: false,
+                                    maxIncluded: false,
+                                    showTitles: true,
+                                    getTitlesWidget: (value, meta) {
+                                      var date = DateTime.fromMillisecondsSinceEpoch(value.toInt()).toString();
+                                      date = date.substring(0, date.length-12);
+                                      return SideTitleWidget(
+                                        meta: meta,
+                                        angle:120,
+                                        child: Text(
+                                          "         $date",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        minIncluded: false,
+                                        maxIncluded: false,
+                                        showTitles: true,
+                                        getTitlesWidget: (value, meta) {
+                                          var humidity = value.toInt();
+                                          return SideTitleWidget(
+                                            meta: meta,
+                                            child: Text(
+                                              "$humidity%",
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                    )
+                                ),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                ),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                )
+                            ),
+                            lineBarsData: [
+                              LineChartBarData(
+                                  spots: humidityList,
+                                  color: Colors.deepPurple,
+                                  dotData: FlDotData(
+                                    show: false,
+                                  )
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
+                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Table(
+                        children: buildHumidity(response.hourlyData[HistoricalHourly.relative_humidity_2m]!.values), //On appelle la fonction buildHumidity qui construit le tableau de l'humidité
+                        border: TableBorder.all(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SingleChildScrollView( //Pour rendre le tableau scrollable
-                child: Table(
-                  children: buildWind(response.hourlyData[HistoricalHourly.wind_speed_10m]!.values,response.hourlyData[HistoricalHourly.wind_direction_10m]!.values,response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values), //On appelle la fonction buildWind qui construit le tableau des vents
-                  border: TableBorder.all(),
+              SingleChildScrollView( //Pour rendre le graph et le tableau scrollable
+                child: Column(
+                  children: [
+                    Row( //On fait un row pour la légende du graph
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Vitesse vent",
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Rafales",
+                          style: TextStyle(
+                            color: Colors.deepPurple[200],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 400,
+                      height: 400,
+                      child: LineChart(
+                          LineChartData(
+                            titlesData: FlTitlesData(
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    minIncluded: false,
+                                    maxIncluded: false,
+                                    showTitles: true,
+                                    getTitlesWidget: (value, meta) {
+                                      var date = DateTime.fromMillisecondsSinceEpoch(value.toInt()).toString();
+                                      date = date.substring(0, date.length-12);
+                                      return SideTitleWidget(
+                                        meta: meta,
+                                        angle:120,
+                                        child: Text(
+                                          "         $date",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        minIncluded: false,
+                                        maxIncluded: false,
+                                        showTitles: true,
+                                        getTitlesWidget: (value, meta) {
+                                          var speed = value.toInt();
+                                          return SideTitleWidget(
+                                            meta: meta,
+                                            space: 1,
+                                            child: Text(
+                                              "$speed kmh",
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                    )
+                                ),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                ),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                )
+                            ),
+                            lineBarsData: [
+                              LineChartBarData(
+                                  spots: windSpeedList,
+                                  color: Colors.deepPurple,
+                                  dotData: FlDotData(
+                                    show: false,
+                                  )
+                              ),
+                              LineChartBarData(
+                                  spots: windGustList,
+                                  color: Colors.deepPurple[200],
+                                  dotData: FlDotData(
+                                    show: false,
+                                  )
+                              )
+                            ],
+                          )
+                      ),
+                    ),
+                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Table(
+                        children: buildWind(response.hourlyData[HistoricalHourly.wind_speed_10m]!.values,response.hourlyData[HistoricalHourly.wind_direction_10m]!.values,response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
+                        border: TableBorder.all(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SingleChildScrollView( //Pour rendre le tableau scrollable
-                child: Table(
-                  children: buildPrecipitation(response.hourlyData[HistoricalHourly.precipitation]!.values,response.hourlyData[HistoricalHourly.rain]!.values,response.hourlyData[HistoricalHourly.snowfall]!.values), //On appelle la fonction buildPrecipitation qui construit le tableau des précipitations
-                  border: TableBorder.all(),
+              SingleChildScrollView( //Pour rendre le graph et le tableau scrollable
+                child: Column(
+                  children: [
+                    Row( //On fait un row pour la légende du graph
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Précipitations",
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Pluie",
+                          style: TextStyle(
+                            color: Colors.deepPurple[200],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Neige",
+                          style: TextStyle(
+                            color: Colors.deepPurple[900],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 400,
+                      height: 400,
+                      child: LineChart(
+                          LineChartData(
+                            titlesData: FlTitlesData(
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    minIncluded: false,
+                                    maxIncluded: false,
+                                    showTitles: true,
+                                    getTitlesWidget: (value, meta) {
+                                      var date = DateTime.fromMillisecondsSinceEpoch(value.toInt()).toString();
+                                      date = date.substring(0, date.length-12);
+                                      return SideTitleWidget(
+                                        meta: meta,
+                                        angle:120,
+                                        child: Text(
+                                          "         $date",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        minIncluded: false,
+                                        maxIncluded: false,
+                                        showTitles: true,
+                                        getTitlesWidget: (value, meta) {
+                                          var amount = value.toStringAsFixed(2);
+                                          return SideTitleWidget(
+                                            meta: meta,
+                                            space: 2,
+                                            child: Text(
+                                              "$amount mm",
+                                              style: TextStyle(
+                                                fontSize: 6,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                    )
+                                ),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                ),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                )
+                            ),
+                            lineBarsData: [
+                              LineChartBarData(
+                                  spots: precipitationList,
+                                  color: Colors.deepPurple,
+                                  dotData: FlDotData(
+                                    show: false,
+                                  )
+                              ),
+                              LineChartBarData(
+                                  spots: rainList,
+                                  color: Colors.deepPurple[200],
+                                  dotData: FlDotData(
+                                    show: false,
+                                  )
+                              ),
+                              LineChartBarData(
+                                  spots: snowList,
+                                  color: Colors.deepPurple[900],
+                                  dotData: FlDotData(
+                                    show: false,
+                                  )
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
+                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Table(
+                        children: buildPrecipitation(response.hourlyData[HistoricalHourly.precipitation]!.values,response.hourlyData[HistoricalHourly.rain]!.values,response.hourlyData[HistoricalHourly.snowfall]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
+                        border: TableBorder.all(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SingleChildScrollView( //Pour rendre le tableau scrollable
-                child: Table(
-                  children: buildCloudcover(response.hourlyData[HistoricalHourly.cloud_cover]!.values), //On appelle la fonction buildCloudcover qui construit le tableau de la couverture nuagueuse
-                  border: TableBorder.all(),
+              SingleChildScrollView( //Pour rendre le graph et le tableau scrollable
+                child: Column(
+                  children: [
+                    Row( //On fait un row pour la légende du graph
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Couverture nuageuse",
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 400,
+                      height: 400,
+                      child: LineChart(
+                          LineChartData(
+                            titlesData: FlTitlesData(
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    minIncluded: false,
+                                    maxIncluded: false,
+                                    showTitles: true,
+                                    getTitlesWidget: (value, meta) {
+                                      var date = DateTime.fromMillisecondsSinceEpoch(value.toInt()).toString();
+                                      date = date.substring(0, date.length-12);
+                                      return SideTitleWidget(
+                                        meta: meta,
+                                        angle:120,
+                                        child: Text(
+                                          "         $date",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        minIncluded: false,
+                                        maxIncluded: false,
+                                        showTitles: true,
+                                        getTitlesWidget: (value, meta) {
+                                          var humidity = value.toInt();
+                                          return SideTitleWidget(
+                                            meta: meta,
+                                            child: Text(
+                                              "$humidity%",
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                    )
+                                ),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                ),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: false,
+                                    )
+                                )
+                            ),
+                            lineBarsData: [
+                              LineChartBarData(
+                                  spots: cloudCoverList,
+                                  color: Colors.deepPurple,
+                                  dotData: FlDotData(
+                                    show: false,
+                                  )
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
+                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Table(
+                        children: buildCloudcover(response.hourlyData[HistoricalHourly.cloud_cover]!.values), //On appelle la fonction buildHumidity qui construit le tableau de l'humidité
+                        border: TableBorder.all(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ]
