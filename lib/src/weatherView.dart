@@ -108,17 +108,18 @@ class WeatherView extends StatelessWidget {
                             ),
                             leftTitles: AxisTitles( //Titres de l'axe de gauche
                               sideTitles: SideTitles(
-                                minIncluded: false, // Encore une fois, on retire le max et le min pour éviter des problèmes de superposition
+                                minIncluded: false, //Encore une fois, on retire le max et le min pour éviter des problèmes de superposition
                                 maxIncluded: false,
                                 showTitles: true, //On montre bien les titres de l'axe de gauche, ce sera ici notre axe des températures, mais pour chaque graph ce sera l'axe des valeurs concerné (humidité en % pour le graph de l'humidité par exemple)
                                 getTitlesWidget: (value, meta) {
                                   var temp = value.toInt(); //On passe les température en Int sur les axes pour plus de clarté
                                   return SideTitleWidget(
                                     meta: meta,
+                                    space: 1,
                                     child: Text(
                                       "$temp°C",
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 8,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -218,10 +219,11 @@ class WeatherView extends StatelessWidget {
                                           var humidity = value.toInt();
                                           return SideTitleWidget(
                                             meta: meta,
+                                            space: 1,
                                             child: Text(
                                               "$humidity%",
                                               style: TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 8,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -325,7 +327,7 @@ class WeatherView extends StatelessWidget {
                                             child: Text(
                                               "$speed kmh",
                                               style: TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 8,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -533,13 +535,14 @@ class WeatherView extends StatelessWidget {
                                         maxIncluded: false,
                                         showTitles: true,
                                         getTitlesWidget: (value, meta) {
-                                          var humidity = value.toInt();
+                                          var cover = value.toInt();
                                           return SideTitleWidget(
                                             meta: meta,
+                                            space: 1,
                                             child: Text(
-                                              "$humidity%",
+                                              "$cover%",
                                               style: TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 8,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
