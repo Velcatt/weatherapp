@@ -108,6 +108,7 @@ class WeatherView extends StatelessWidget {
                             ),
                             leftTitles: AxisTitles( //Titres de l'axe de gauche
                               sideTitles: SideTitles(
+                                reservedSize: 25, // On laisse de la place pour éviter que les titres ne retournent à la ligne
                                 minIncluded: false, //Encore une fois, on retire le max et le min pour éviter des problèmes de superposition
                                 maxIncluded: false,
                                 showTitles: true, //On montre bien les titres de l'axe de gauche, ce sera ici notre axe des températures, mais pour chaque graph ce sera l'axe des valeurs concerné (humidité en % pour le graph de l'humidité par exemple)
@@ -119,7 +120,7 @@ class WeatherView extends StatelessWidget {
                                     child: Text(
                                       "$temp°C",
                                       style: TextStyle(
-                                        fontSize: 8,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -223,7 +224,7 @@ class WeatherView extends StatelessWidget {
                                             child: Text(
                                               "$humidity%",
                                               style: TextStyle(
-                                                fontSize: 8,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -316,6 +317,7 @@ class WeatherView extends StatelessWidget {
                                 ),
                                 leftTitles: AxisTitles(
                                     sideTitles: SideTitles(
+                                        reservedSize: 40,
                                         minIncluded: false,
                                         maxIncluded: false,
                                         showTitles: true,
@@ -327,13 +329,13 @@ class WeatherView extends StatelessWidget {
                                             child: Text(
                                               "$speed kmh",
                                               style: TextStyle(
-                                                fontSize: 8,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           );
                                         }
-                                    )
+                                    ),
                                 ),
                                 topTitles: AxisTitles(
                                     sideTitles: SideTitles(
@@ -360,9 +362,10 @@ class WeatherView extends StatelessWidget {
                                   dotData: FlDotData(
                                     show: false,
                                   )
-                              )
+                              ),
                             ],
-                          )
+
+                          ),
                       ),
                     ),
                     Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
@@ -427,6 +430,7 @@ class WeatherView extends StatelessWidget {
                                 ),
                                 leftTitles: AxisTitles(
                                     sideTitles: SideTitles(
+                                        reservedSize: 45,
                                         minIncluded: false,
                                         maxIncluded: false,
                                         showTitles: true,
@@ -438,7 +442,7 @@ class WeatherView extends StatelessWidget {
                                             child: Text(
                                               "$amount mm",
                                               style: TextStyle(
-                                                fontSize: 8,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -542,7 +546,7 @@ class WeatherView extends StatelessWidget {
                                             child: Text(
                                               "$cover%",
                                               style: TextStyle(
-                                                fontSize: 8,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
