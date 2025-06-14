@@ -10,7 +10,9 @@ Elle peut également être compilée avec la command "flutter build apk" pour ob
 
 ## Utilisation de l'application
 
-Lorsque l'application est lancée, vous arriverez directement sur le formulaire à remplir pour choisir les coordonnées et la période de temps désirée. Si vous préférez rechercher une ville, il vous suffit d'ouvrir le menu déroulant "Rechercher...", d'entrer un nom de ville ou un code postal, et d'appuyer sur le bouton avec une icône de loupe. Cela préremplira les champs de coordonnées avec les coordonnées de la ville recherchée.
+Lorsque l'application est lancée, vous arriverez directement sur le formulaire à remplir pour choisir les coordonnées et la période de temps désirée.  
+
+Si vous préférez rechercher une ville, il vous suffit d'ouvrir le menu déroulant "Rechercher...", d'entrer un nom de ville ou un code postal, et d'appuyer sur le bouton avec une icône de loupe. Cela préremplira les champs de coordonnées avec les coordonnées de la ville recherchée.
 
 Une fois ceci fait il ne reste plus qu'à appuyer sur le bouton de validation. Vous serez alors redirigé vers une vue des informations météo, classées dans 5 onglet chacun représentée par des icônes :
 
