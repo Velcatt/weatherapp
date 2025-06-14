@@ -51,7 +51,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                             } catch (_){ //Si les deux opérations précédentes ne fonctionnent pas et soulèvent une erreur, c'est que l'API n'a pas trouvé de ville correspondante.
                               showDialog(
                                   context: context,
-                                  builder : (context) => AlertDialog( //Si les dates ne sont pas valides, on fait pop une fenêtre de dialogue qui l'indique
+                                  builder : (context) => AlertDialog( //Si l'API n'a pas trouvé ne ville, on fait pop une fenêtre de dialogue qui l'indique
                                     title: const Text('Erreur'),
                                     content : const Text('Aucune ville trouvée à ce nom / code postal'),
                                     actions: [
