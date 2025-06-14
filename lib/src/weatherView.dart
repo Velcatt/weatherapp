@@ -144,14 +144,14 @@ class WeatherView extends StatelessWidget {
                               spots: tempList, //On passe la liste de points des température à la première ligne
                               color: Colors.deepPurple, //Même couleur que la légende correspondante
                               dotData: FlDotData(
-                                show: false,
+                                show: false, //On ne montre pas les points car celà rend le graphique assez brouillon avec un grand nombre de points
                               )
                             ),
                             LineChartBarData(
                                 spots: apparentTempList, //On passe la liste de points des température apparentes à la deuxième ligne
                                 color: Colors.deepPurple[200], //Même couleur que la légende correspondante
                                 dotData: FlDotData(
-                                  show: false,
+                                  show: false, //On ne montre pas les points car celà rend le graphique assez brouillon avec un grand nombre de points
                                 )
                             )
                           ],
