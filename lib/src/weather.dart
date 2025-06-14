@@ -1,6 +1,6 @@
 import 'package:open_meteo/open_meteo.dart';
 
-class WeatherRequest { //Classe pour stocker les données nécessaires à une requête API
+class WeatherRequest { //Classe pour stocker les données nécessaires à une requête API sur Historical API
   late double latitude;
   late double longitude;
   late DateTime startDate;
@@ -14,7 +14,15 @@ class WeatherRequest { //Classe pour stocker les données nécessaires à une re
   }
 }
 
-Future<ApiResponse> getResponse(WeatherRequest request) async { //Fonction qui effectue la requête API en partant d'une WeatherRequest
+class GeocodingRequest { //Classe pour stocker les données nécessaire à une requête API sur Geocoding API
+  late String cityName;
+
+  GeocodingRequest (String cityName) {
+    this.cityName = cityName;
+  }
+}
+
+Future<ApiResponse> getResponse(WeatherRequest request) async { //Fonction qui effectue la requête API vers l'Historical API en partant d'une WeatherRequest
   final historical = HistoricalApi();
   return await historical.request(
     latitude: request.latitude,
@@ -34,4 +42,9 @@ Future<ApiResponse> getResponse(WeatherRequest request) async { //Fonction qui e
       HistoricalHourly.cloud_cover,
     },
   );
+}
+
+Future<Map> getCoordinates(GeocodingRequest request) async { //Fonction qui effectue la requête API vers la Geocoding API en partant d'une GeocodingRequest
+  final geocoding = GeocodingApi();
+  return await geocoding.requestJson(name: request.cityName);
 }

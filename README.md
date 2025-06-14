@@ -10,7 +10,7 @@ Elle peut également être compilée avec la command "flutter build apk" pour ob
 
 ## Utilisation de l'application
 
-Lorsque l'application est lancée, vous arriverez directement sur le formulaire à remplir pour choisir les coordonnées et la période de temps désirée.
+Lorsque l'application est lancée, vous arriverez directement sur le formulaire à remplir pour choisir les coordonnées et la période de temps désirée. Si vous préférez rechercher une ville, il vous suffit d'ouvrir le menu déroulant "Rechercher...", d'entrer un nom de ville ou un code postal, et d'appuyer sur le bouton avec une icône de loupe. Cela préremplira les champs de coordonnées avec les coordonnées de la ville recherchée.
 
 Une fois ceci fait il ne reste plus qu'à appuyer sur le bouton de validation. Vous serez alors redirigé vers une vue des informations météo, classées dans 5 onglet chacun représentée par des icônes :
 
@@ -33,7 +33,7 @@ Et enfin le fichier /lib/src/weatherView.dart contient tout ce qui est lié à l
 
 ## Dépendances
 
-Package [open_meteo.dart](https://pub.dev/packages/open_meteo) : Utilisé pour effectuer les appels vers l'API Open Meteo (simplifie grandement le processus avec des fonctions évitant d'avoir à construire soi-même l'URL de la requête) et gérer les réponses de l'API
+Package [open_meteo.dart](https://pub.dev/packages/open_meteo) : Utilisé pour effectuer les appels vers l'API Open Meteo (simplifie grandement le processus avec des fonctions évitant d'avoir à construire soi-même l'URL de la requête) et gérer les réponses de l'API. On utilise 2 API de Open Météo, la Geocoding API pour la recherche par nom de ville, et la Historical API pour récupérer les données météo.
 
 Package [date_field.dart](https://pub.dev/packages/date_field) : Utilisé pour avoir un picker de date prévu pour s'intégrer dans des formulaires (le widget DateTimeFormField)
 

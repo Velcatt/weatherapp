@@ -19,25 +19,25 @@ class WeatherView extends StatelessWidget {
       tempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Pour chaque température, on ajoute un point de graph dans la liste, contenant la date/heure convertit en millisecond depuis l'epoch, et la température
     });
     response.hourlyData[HistoricalHourly.apparent_temperature]!.values.forEach((key, value) {
-      apparentTempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+      apparentTempList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Idem pour la température ressentie
     });
     response.hourlyData[HistoricalHourly.relative_humidity_2m]!.values.forEach((key, value) {
-      humidityList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+      humidityList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Idem pour l'humidité
     });
     response.hourlyData[HistoricalHourly.wind_speed_10m]!.values.forEach((key, value) {
-      windSpeedList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+      windSpeedList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Idem pour la vitesse du vent
     });
     response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values.forEach((key, value) {
-      windGustList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+      windGustList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Idem pour les rafales
     });
     response.hourlyData[HistoricalHourly.rain]!.values.forEach((key, value) {
-      rainList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+      rainList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Idem pour la pluie
     });
     response.hourlyData[HistoricalHourly.snowfall]!.values.forEach((key, value) {
-      snowList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+      snowList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Idem pour la chute de neige
     });
     response.hourlyData[HistoricalHourly.cloud_cover]!.values.forEach((key, value) {
-      cloudCoverList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble()));
+      cloudCoverList.add(FlSpot(key.millisecondsSinceEpoch.toDouble(), value.toDouble())); //Idem pour la couverture nuageuse
     });
 
     return DefaultTabController(

@@ -22,14 +22,50 @@ class MyCustomFormState extends State<MyCustomForm> {
     DateTime? endDate;
     final latitudeController = TextEditingController();
     final longitudeController = TextEditingController();
+    final cityController = TextEditingController();
     return Form(
       key: _formKey,
-
         child : SizedBox(
           width: 300,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, //On centre le formulaire verticalement pour une meilleure accessibilité des champs
             children: <Widget>[
+              ExpansionTile(//On met la recherche de ville dans une ExpansionTile car son utilisation est totalement optionnelle
+                  title: Text('Rechercher...'),
+                  children: [
+                    TextFormField( //Champs de nom de ville / code postal. Ce champs n'a pas de validator car la recherche par nom de ville/code postal est optionnelle
+                      decoration: const InputDecoration(
+                        hintText: 'exemple : Montpellier ou 34000',
+                        labelText: 'Nom de ville ou code postal',
+                      ),
+                      controller: cityController,
+                    ),
+                    ElevatedButton(
+                        onPressed: () async { //On fait une fonction async puisqu'on aura besoin d'attendre la réponse d'une API
+                          var apiAnswer = await getCoordinates(GeocodingRequest(cityController.text)); //on récupère la réponse de l'API Geocoding pour pouvoir l'utiliser ensuite
+                          try {
+                            latitudeController.text = apiAnswer.values.elementAt(0)[0]['latitude'].toString(); //On prérempli le champs Latitude avec la latitude de la ville cherchée
+                            longitudeController.text = apiAnswer.values.elementAt(0)[0]['longitude'].toString(); //On prérempli le champs Longitude avec la longitude de la ville cherchée
+                          } catch (_){ //Si les deux opérations précédentes ne fonctionnent pas et soulèvent une erreur, c'est que l'API n'a pas trouvé de ville correspondante.
+                            showDialog(
+                                context: context,
+                                builder : (context) => AlertDialog( //Si les dates ne sont pas valides, on fait pop une fenêtre de dialogue qui l'indique
+                                  title: const Text('Erreur'),
+                                  content : const Text('Aucune ville trouvée à ce nom / code postal'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    )
+                                  ],
+                                )
+                            );
+                          }
+                        }, 
+                        child: const Icon(Icons.search),
+                    ),
+                  ],
+              ),
               TextFormField( //Champs de texte pour la latitude
                 decoration: const InputDecoration(
                   hintText: 'exemple : 52.52',
