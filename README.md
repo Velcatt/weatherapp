@@ -42,3 +42,7 @@ Package [date_field.dart](https://pub.dev/packages/date_field) : Utilisé pour a
 Package [intl.dart, intl_standalone.dart et date_symbol_data_local.dart](https://pub.dev/packages/intl) : Utilisés pour traiter des formats de date dans le formulaire et initialiser les locales nécessaires pour le bon fonctionnement de date_field
 
 Package [fl_chart.dart](https://pub.dev/packages/fl_chart) : Utilisé pour construire et afficher les graphiques à partir de la réponse de l'API. Je l'ai choisis plutôt que SyncFusion Flutter Charts car je trouvais fl_chart plus flexible dans sa façon de traiter les données et d'en faire des points sur un graphique.
+
+## Bug
+
+Il faut parfois appuyer plusieurs fois sur les boutons "Valider" et "Rechercher" (la loupe) pour qu'ils fonctionnent. J'ai l'impression que c'est lié au variations de temps de réponse de l'API mais je n'en suis pas certain.
