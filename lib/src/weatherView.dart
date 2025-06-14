@@ -46,15 +46,15 @@ class WeatherView extends StatelessWidget {
         appBar: AppBar(
           bottom: const TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.thermostat),),
-                Tab(icon: Icon(Icons.water),),
-                Tab(icon: Icon(Icons.wind_power),),
-                Tab(icon: Icon(Icons.water_drop),),
-                Tab(icon: Icon(Icons.cloud),),
+                Tab(icon: Icon(Icons.thermostat),), //Icône de l'onglet température
+                Tab(icon: Icon(Icons.water),), //Icône de l'onglet humidité
+                Tab(icon: Icon(Icons.wind_power),), //Icône de l'onglet vents
+                Tab(icon: Icon(Icons.water_drop),), //Icône de l'onglet précipitations
+                Tab(icon: Icon(Icons.cloud),), //Icône de l'onglet couverture nuageuse
               ],
           ),
         ),
-        body: TabBarView(
+        body: TabBarView( //Chaque child correspond à un onglet de la TabBar
             children: [
               SingleChildScrollView( //Pour rendre le graph et le tableau scrollable
                 child: Column(
@@ -78,7 +78,7 @@ class WeatherView extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(
+                    SizedBox( //On met le graphique dans une SizedBox car il a besoin d'être contenu dans un objet lui indiquant quelle taille il doit faire
                       width: 400,
                       height: 400,
                       child: LineChart( //On construit le graphique. Je commenterais ce premier graph en détail mais ils fonctionnent tous de façon similaire
@@ -107,7 +107,7 @@ class WeatherView extends StatelessWidget {
                               ),
                             ),
                             leftTitles: AxisTitles( //Titres de l'axe de gauche
-                              sideTitles: SideTitles(
+                              sideTitles: SideTitles( //Les titres des valeurs, ici les températures
                                 reservedSize: 25, // On laisse de la place pour éviter que les titres ne retournent à la ligne
                                 minIncluded: false, //Encore une fois, on retire le max et le min pour éviter des problèmes de superposition
                                 maxIncluded: false,
@@ -118,7 +118,7 @@ class WeatherView extends StatelessWidget {
                                     meta: meta,
                                     space: 1,
                                     child: Text(
-                                      "$temp°C",
+                                      "$temp°C", //On récupère et on affiche la température en Int
                                       style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
@@ -158,7 +158,7 @@ class WeatherView extends StatelessWidget {
                         )
                       ),
                     ),
-                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                    Padding( //On ajoute du padding au dessus pour laisser de la place aux titres de l'axe du bas du graph. On aurais pu le faire avec l'attribut reservedSpace mais cela applatissait le graphique et rendait moins bien à mon goût
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
                         children: buildTemperature(response.hourlyData[HistoricalHourly.temperature_2m]!.values,response.hourlyData[HistoricalHourly.apparent_temperature]!.values), //On appelle la fonction buildTemperature qui construit le tableau des température
@@ -255,7 +255,7 @@ class WeatherView extends StatelessWidget {
                           )
                       ),
                     ),
-                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                    Padding( //On ajoute du padding au dessus pour laisser de la place aux titres de l'axe du bas du graph. On aurais pu le faire avec l'attribut reservedSpace mais cela applatissait le graphique et rendait moins bien à mon goût
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
                         children: buildHumidity(response.hourlyData[HistoricalHourly.relative_humidity_2m]!.values), //On appelle la fonction buildHumidity qui construit le tableau de l'humidité
@@ -368,7 +368,7 @@ class WeatherView extends StatelessWidget {
                           ),
                       ),
                     ),
-                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                    Padding( //On ajoute du padding au dessus pour laisser de la place aux titres de l'axe du bas du graph. On aurais pu le faire avec l'attribut reservedSpace mais cela applatissait le graphique et rendait moins bien à mon goût
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
                         children: buildWind(response.hourlyData[HistoricalHourly.wind_speed_10m]!.values,response.hourlyData[HistoricalHourly.wind_direction_10m]!.values,response.hourlyData[HistoricalHourly.wind_gusts_10m]!.values), //On appelle la fonction buildWind qui construit le tableau des vents
@@ -480,7 +480,7 @@ class WeatherView extends StatelessWidget {
                           )
                       ),
                     ),
-                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                    Padding( //On ajoute du padding au dessus pour laisser de la place aux titres de l'axe du bas du graph. On aurais pu le faire avec l'attribut reservedSpace mais cela applatissait le graphique et rendait moins bien à mon goût
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
                         children: buildPrecipitation(response.hourlyData[HistoricalHourly.precipitation]!.values,response.hourlyData[HistoricalHourly.rain]!.values,response.hourlyData[HistoricalHourly.snowfall]!.values), //On appelle la fonction buildPrecipitation qui construit le tableau des précipitations
@@ -577,7 +577,7 @@ class WeatherView extends StatelessWidget {
                           )
                       ),
                     ),
-                    Padding( //On ajoute du padding pour laisser de la place aux titres de l'axe du bas du graph
+                    Padding( //On ajoute du padding au dessus pour laisser de la place aux titres de l'axe du bas du graph. On aurais pu le faire avec l'attribut reservedSpace mais cela applatissait le graphique et rendait moins bien à mon goût
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Table(
                         children: buildCloudcover(response.hourlyData[HistoricalHourly.cloud_cover]!.values), //On appelle la fonction buildCloudcover qui construit le tableau de la couverture nuageuse

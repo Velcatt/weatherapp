@@ -1,6 +1,6 @@
 # WeatherApp
 
-Il s'agit d'une application mobile/PC (même si l'interface est plus orientée mobile) qui récupère des données de l'API Open-Meteo et les affiches.
+Il s'agit d'une application mobile/PC (même si l'interface est plus orientée mobile) qui récupère des données de l'API Open-Meteo et les affiches sous forme de graphique et de tableau.
 
 ## Exécution de l'application
 
@@ -33,10 +33,10 @@ Et enfin le fichier /lib/src/weatherView.dart contient tout ce qui est lié à l
 
 ## Dépendances
 
-Package [open_meteo.dart](https://pub.dev/packages/open_meteo) : Utilisé pour effectuer les appels API vers l'API Open Meteo (simplifie grandement le processus avec des fonctions évitant d'avoir à construire soi-même l'URL de la requête) et gérer les réponses de l'API
+Package [open_meteo.dart](https://pub.dev/packages/open_meteo) : Utilisé pour effectuer les appels vers l'API Open Meteo (simplifie grandement le processus avec des fonctions évitant d'avoir à construire soi-même l'URL de la requête) et gérer les réponses de l'API
 
 Package [date_field.dart](https://pub.dev/packages/date_field) : Utilisé pour avoir un picker de date prévu pour s'intégrer dans des formulaires (le widget DateTimeFormField)
 
 Package [intl.dart, intl_standalone.dart et date_symbol_data_local.dart](https://pub.dev/packages/intl) : Utilisés pour traiter des formats de date dans le formulaire et initialiser les locales nécessaires pour le bon fonctionnement de date_field
 
-Package [fl_chart.dart](https://pub.dev/packages/fl_chart) : Utilisé pour construire et afficher les graphiques
+Package [fl_chart.dart](https://pub.dev/packages/fl_chart) : Utilisé pour construire et afficher les graphiques à partir de la réponse de l'API. Je l'ai choisis plutôt que SyncFusion Flutter Charts car je trouvais fl_chart plus flexible dans sa façon de traiter les données et d'en faire des points sur un graphique.
