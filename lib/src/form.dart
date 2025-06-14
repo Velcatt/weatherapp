@@ -32,7 +32,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             children: <Widget>[
               Theme(
                 data: ThemeData().copyWith(dividerColor: Colors.transparent), //On rend les dividers transparents pour clarifier le formulaire
-                child: ExpansionTile(//On met la recherche de ville dans une ExpansionTile car son utilisation est totalement optionnelle
+                child: ExpansionTile( //On met la recherche de ville dans une ExpansionTile car son utilisation est totalement optionnelle
                     title: Text('Rechercher...'),
                     children: [
                       TextFormField( //Champs de nom de ville / code postal. Ce champs n'a pas de validator car la recherche par nom de ville/code postal est optionnelle
@@ -122,7 +122,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 mode: DateTimeFieldPickerMode.date, //On ne choisit que la date, l'API ne reconnaissant pas l'heure
               ),
               ElevatedButton(
-                onPressed: () async { //La fonction est async puisque c'est à l'appui du bouton de validation que sera éventuellement appelé l'API Open Meteo
+                onPressed: () async { //La fonction est async puisque c'est à l'appui du bouton de validation que sera éventuellement appelé l'Historical API d'Open Meteo
                   if (startDate == null || endDate == null || startDate!.isAfter(endDate!)) { //On vérifie que deux date sont choisies, et que la date de fin est ultérieure à la date de début
                     showDialog(
                       context: context,
