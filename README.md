@@ -45,7 +45,7 @@ Package [fl_chart.dart](https://pub.dev/packages/fl_chart) : Utilisé pour const
 
 Package [flutter_localizations.dart](https://pub.dev/packages/flutter_localization) : Utilisé pour avoir des locales globales dans la MaterialApp afin de pouvoir avoir les date pickers en français.
 
-## Bug
+## Bugs
 
 Il faut parfois appuyer plusieurs fois sur les boutons "Valider" et "Rechercher" (la loupe) pour qu'ils fonctionnent. J'ai l'impression que c'est lié au variations de temps de réponse de l'API mais je n'en suis pas certain.
 
