@@ -46,3 +46,5 @@ Package [fl_chart.dart](https://pub.dev/packages/fl_chart) : Utilisé pour const
 ## Bug
 
 Il faut parfois appuyer plusieurs fois sur les boutons "Valider" et "Rechercher" (la loupe) pour qu'ils fonctionnent. J'ai l'impression que c'est lié au variations de temps de réponse de l'API mais je n'en suis pas certain.
+
+Il peut y avoir de gros ralentissements lorsque de grandes période de temps sont recherchées (exemple : 1 an)
