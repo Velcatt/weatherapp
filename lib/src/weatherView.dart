@@ -186,7 +186,7 @@ class WeatherView extends StatelessWidget {
                     SizedBox(
                       width: 400,
                       height: 400,
-                      child: LineChart(
+                      child: LineChart( // On construit le graphique de l'humidité
                           LineChartData(
                             titlesData: FlTitlesData(
                                 bottomTitles: AxisTitles(
@@ -290,7 +290,7 @@ class WeatherView extends StatelessWidget {
                     SizedBox(
                       width: 400,
                       height: 400,
-                      child: LineChart(
+                      child: LineChart( //On construit le graphique du vent
                           LineChartData(
                             titlesData: FlTitlesData(
                                 bottomTitles: AxisTitles(
@@ -403,7 +403,7 @@ class WeatherView extends StatelessWidget {
                     SizedBox(
                       width: 400,
                       height: 400,
-                      child: LineChart(
+                      child: LineChart( //On construit le graphique des précipitations
                           LineChartData(
                             titlesData: FlTitlesData(
                                 bottomTitles: AxisTitles(
@@ -508,7 +508,7 @@ class WeatherView extends StatelessWidget {
                     SizedBox(
                       width: 400,
                       height: 400,
-                      child: LineChart(
+                      child: LineChart( //On construit le graphique de la couverture nuageuse
                           LineChartData(
                             titlesData: FlTitlesData(
                                 bottomTitles: AxisTitles(
