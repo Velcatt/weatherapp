@@ -28,7 +28,7 @@ Si vous souhaitez revenir au formulaire, il suffit d'appuyer sur la flèche reto
 
 ## Organisation du projet
 
-Le point d'entrée /lib/main.dart ne contient qu'une appBar et une instance du formulaire.  
+Le point d'entrée /lib/main.dart ne contient qu'une MaterialApp, avec une appBar et une instance du formulaire.  
 Le fichier /lib/src/form.dart contient le formulaire et son état.  
 Le fichier /lib/src/weather.dart contient tout ce qui est lié à l'appel de l'API Open Meteo.  
 Et enfin le fichier /lib/src/weatherView.dart contient tout ce qui est lié à l'affichage des données récupérées depuis l'API.  
@@ -43,8 +43,12 @@ Package [intl.dart, intl_standalone.dart et date_symbol_data_local.dart](https:/
 
 Package [fl_chart.dart](https://pub.dev/packages/fl_chart) : Utilisé pour construire et afficher les graphiques à partir de la réponse de l'API. Je l'ai choisis plutôt que SyncFusion Flutter Charts car je trouvais fl_chart plus flexible dans sa façon de traiter les données et d'en faire des points sur un graphique.
 
+Package [flutter_localizations.dart](https://pub.dev/packages/flutter_localization) : Utilisé pour avoir des locales globales dans la MaterialApp afin de pouvoir avoir les date pickers en français.
+
 ## Bug
 
 Il faut parfois appuyer plusieurs fois sur les boutons "Valider" et "Rechercher" (la loupe) pour qu'ils fonctionnent. J'ai l'impression que c'est lié au variations de temps de réponse de l'API mais je n'en suis pas certain.
 
 Il peut y avoir de gros ralentissements lorsque de grandes période de temps sont recherchées (exemple : 1 an)
+
+Il y a plusieurs erreurs remontée par l'IDE lors du premier build, que je n'ai pas eu le temps de traiter. Elles n'empêche cependant pas l'application de fonctionner.
