@@ -430,7 +430,7 @@ class WeatherView extends StatelessWidget {
                                 ),
                                 leftTitles: AxisTitles(
                                     sideTitles: SideTitles(
-                                        reservedSize: 45,
+                                        reservedSize: 50,
                                         minIncluded: false,
                                         maxIncluded: false,
                                         showTitles: true,
