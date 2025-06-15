@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'src/form.dart';
 import 'package:intl/intl_standalone.dart' if (dart.library.html) 'package:intl/intl_browser.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async{
   initializeDateFormatting();
@@ -22,7 +23,14 @@ void main() async{
         body: Center(
               child : MyCustomForm() //Le formulaire est ici placé sur la page, au centre
             ),
-        )
+        ),
+    localizationsDelegates: [ //On utilise la localisation globale pour pouvoir mettre les date pickers en français dans le form
+      GlobalMaterialLocalizations.delegate
+    ],
+    supportedLocales: [
+      const Locale('en'),
+      const Locale('fr')
+    ],
     )
   );
 }

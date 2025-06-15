@@ -99,10 +99,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: const InputDecoration(
                   labelText: 'Date de début',
                 ),
-                dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français
+                dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français une fois entrée par l'utilisateur
                 firstDate: DateTime(1940, 1, 1), //0n commence en 1940 puisque c'est la date la plus tôt de l'API
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),
+                materialDatePickerOptions: MaterialDatePickerOptions(
+                  locale: Locale('fr','FR'), //Pour mettre le date picker en format français
+                ),
                 onChanged: (DateTime? value) {
                   startDate = value;
                 },
@@ -112,10 +115,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: const InputDecoration(
                   labelText: 'Date de fin',
                 ),
-                dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français
+                dateFormat: DateFormat.yMMMMd('fr_FR'), //Pour formatter la date en français une fois entrée par l'utilisateur
                 firstDate: DateTime(1940,1,1), //0n commence en 1940 puisque c'est la date la plus tôt de l'API
                 lastDate: DateTime.now(),
                 initialPickerDateTime: DateTime.now(),
+                materialDatePickerOptions: MaterialDatePickerOptions(
+                  locale: Locale('fr','FR'), //Pour mettre le date picker en format français
+                ),
                 onChanged: (DateTime? value) {
                   endDate = value;
                 },
